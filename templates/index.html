@@ -1,0 +1,585 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% include 'accounts/snippets/css.html' %}
+{% include 'accounts/snippets/jstop.html' %}
+
+{% endblock newsnippet %}
+
+
+{% block conten %}
+{% include 'snippets/nav.html' %}
+
+
+
+<div class="container-xxl  ">
+    <div class="row">
+        <div class="col-lg-2 d-none d-lg-block border-end ">
+            <!-- sider kiri -->
+            <h3 class="mt-3">Youth</h3>
+            <small>Hi Welcome</small>
+            <div class="  py-2  align-items-center pe-3">
+
+                {% if user.is_authenticated %}
+
+                <ul class="navbar-nav ps-3 gap-3 " style=" border-left: 1px solid gray;">
+
+                    {% if user.is_seller and not user.has_store %}
+                    <a href="{% url 'store' %}" style="color: #0e0e0e; text-decoration: none;">
+                        <li class="nav-item d-flex align-items-center gap-2">
+                            <div class="rounded-circle  " style="width: 32px;">
+                                <img src="{% static 'img/image-shop.svg' %}" alt="" class="img-fluid w-100">
+                            </div>
+                            <small>toko</small>
+
+                        </li>
+                    </a>
+
+                    {% elif user.has_store and user.is_seller %}
+                    <a href="{% url 'seller_dashboard' %}" style="color: #0e0e0e; text-decoration: none;">
+                        <li class="nav-item d-flex align-items-center gap-2">
+                            <div class="rounded-circle  " style="width: 32px;">
+                                <img src="{% static 'img/image-shop.svg' %}" alt="" class="img-fluid w-100">
+                            </div>
+                            <small>toko</small>
+
+                        </li>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'seller_verification' %}" style="color: #0e0e0e; text-decoration: none;">
+                        <li class="nav-item d-flex align-items-center gap-2">
+
+                            <div class="rounded-circle  " style="width: 32px; filter: grayscale(100%);">
+                                <img src="{% static 'img/image-shop.svg' %}" alt="" class="img-fluid w-100">
+                            </div>
+                            <small>toko</small>
+                        </li>
+                    </a>
+
+                    {% endif %}
+                    <a href="{% url 'profile' username=user.username %}" style="text-decoration: none; color: #0e0e0e;">
+                        <li class="nav-item d-flex align-items-center gap-2">
+                            <div class="rounded-circle overflow-hidden" style="width: 32px;">
+                                <img src="{% static 'img/default-profile.svg' %}" alt="" class="img-fluid w-100">
+                            </div>
+                            <div class=""
+                                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50px;">
+                                <small class="nav-nama ">{{user}}</small>
+                            </div>
+                        </li>
+                    </a>
+                </ul>
+                {% else %}
+                <ul class="list-unstyled d-flex justify-content-around  flex-column flex-xl-row w-100 gap-1  ">
+                    <li class="nav-item btn-sign flex-fill">
+                        <a href="{% url 'sign' %}">
+                            <button class="px-2 py-1 w-100  rounded-5 border-0">
+                                <small>Sign in</small>
+                            </button>
+                        </a>
+                    </li>
+                    <li class="nav-item btn-sign flex-fill">
+                        <a href="{% url 'signup' %}">
+                            <button class="px-2 py-1 w-100  rounded-5 border-0">
+                                <small>Sign up</small>
+                            </button>
+                        </a>
+                    </li>
+                </ul>
+
+                {% endif %}
+                <hr>
+
+
+                <ul class="navbar-nav justify-content-center flex-grow-1  ">
+                    <li class="nav-item d-flex align-items-center gap-2">
+                        <i class='bx bx-home-alt-2'></i>
+                        <a class="nav-link" aria-current="page" href="/home/">Home</a>
+                    </li>
+                    <hr>
+                    <h4>My Activity</h4>
+                    <li class="nav-item d-flex align-items-center gap-2">
+                        <i class='bx bx-spreadsheet'></i>
+                        <a class="nav-link" aria-current="page" href="/home/">transaction history</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center gap-2">
+                        <i class='bx bx-bookmark-heart'></i>
+                        <a class="nav-link" href="/about/">favorite list</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center gap-2">
+                        <i class='bx bx-store-alt'></i>
+                        <a class="nav-link" href="/about/">toko favorite</a>
+                    </li>
+                    <hr>
+                    <h4>Category</h4>
+
+                    <div class="nav-item dropdown">
+                        <button class="nav-item d-flex align-items-center gap-2 bg-transparent border-0 ">
+                            <i class='bx bx-bowl-hot fs-5'></i>
+                            <a class="nav-link fs-5 dropdown-h6">Food</a>
+                        </button>
+                        <ul class="menu-dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link   " href="/about/">food</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link   " href="/about/">drink</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link   " href="/about/">fruit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link   " href="/about/">ice cream</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link   " href="/about/">raw food</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <button class="nav-item d-flex align-items-center gap-2 bg-transparent border-0 ">
+                            <i class='bx bxs-t-shirt fs-5'></i>
+                            <a class="nav-link fs-5 dropdown-h6">Clothes</a>
+                        </button>
+                        <ul class="menu-dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">man clothes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">man accesoris</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">woman clothes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">woman accesoris</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">hat</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">shoes</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <button class="nav-item d-flex align-items-center gap-2 bg-transparent border-0 ">
+                            <i class='bx bx-car fs-5'></i>
+                            <a class="nav-link fs-5 dropdown-h6">Vehicle</a>
+                        </button>
+                        <ul class="menu-dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">motorcycle and accesoris</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">car and accesoris</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">helmet and accesoris</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <button class="nav-item d-flex align-items-center gap-2 bg-transparent border-0 ">
+                            <i class='bx bx-devices fs-5'></i>
+                            <a class="nav-link fs-5 dropdown-h6">Electronic</a>
+                        </button>
+                        <ul class="menu-dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">electronic</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">handphone and accesoris</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">laptop and accesoris</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">computer and accesoris</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <button class="nav-item d-flex align-items-center gap-2 text-start bg-transparent border-0 ">
+                            <i class='bx bx-spa fs-5'></i>
+                            <a class="nav-link fs-5 dropdown-h6">Beauty regimen</a>
+                        </button>
+                        <ul class="menu-dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">skincare</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">makeup</a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <button class="nav-item d-flex align-items-center gap-2 bg-transparent border-0 ">
+                            <i class='bx bx-category fs-5'></i>
+                            <a class="nav-link fs-5 dropdown-h6">Other</a>
+                        </button>
+                        <ul class="menu-dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">basic needs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">voucher and phonecredit</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">top up games</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about/">home decoration</a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <hr>
+                    <h4>service</h4>
+                    <li class="nav-item d-flex align-items-center gap-2">
+                        <i class='bx bx-message-dots'></i>
+                        <a class="nav-link" href="/about/">customer service</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center gap-2">
+                        <i class='bx bx-universal-access'></i>
+                        <a class="nav-link" href="/about/">about we</a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+
+                    <hr>
+                    <li class="nav-item d-flex align-items-center gap-2">
+                        <i class='bx bx-log-out'></i>
+                        <a class="nav-link" href="{% url 'signout' %}">logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-7 col-sm-9 col-12 px-sm-5 px-0  order-2 order-sm-1 ">
+            <!-- main -->
+            <!-- story -->
+            <h5 class="mt-lg-3">Friend Story</h5>
+            <div class=" d-flex justify-content-between gap-3 ">
+
+                <!-- Tombol navigasi scroll kiri -->
+                <button class="scroll-button scroll-left hidden bg-transparent">
+                    <i class="bx bx-chevron-left"></i>
+                </button>
+
+                <!-- Konten scrollable -->
+                <div class="scroll-content d-flex gap-2 mb-2 mb-md-0 overflow-hidden"
+                    style="white-space: nowrap; scroll-behavior: smooth;">
+
+
+                    <div class="rounded-circle p-1 border">
+                        <img src="{% static 'img/default-profile.svg' %}" alt="Foto Profil"
+                            class="rounded-circle mr-2 border bg-white" width="65" height="65">
+                    </div>
+
+                    <!-- Tambahkan tombol-tombol lain di sini -->
+                </div>
+
+                <!-- Tombol navigasi scroll kanan -->
+                <button class=" scroll-right border-0 bg-transparent">
+                    <i class="bx bx-chevron-right"></i>
+                </button>
+
+            </div>
+
+
+
+            <script>
+                const scrollContent = document.querySelector(".scroll-content");
+                const scrollLeftButton = document.querySelector(".scroll-left");
+                const scrollRightButton = document.querySelector(".scroll-right");
+                const scrollAmount = 100;
+
+                scrollLeftButton.addEventListener("click", () => {
+                    scrollContent.scrollLeft -= scrollAmount;
+                });
+
+                scrollRightButton.addEventListener("click", () => {
+                    scrollContent.scrollLeft += scrollAmount;
+                });
+
+                // Cek apakah tombol scroll kanan atau kiri harus disembunyikan
+                scrollContent.addEventListener("scroll", () => {
+                    if (scrollContent.scrollLeft === 0) {
+                        scrollLeftButton.classList.add("hidden"); // Menggunakan .add tanpa tanda sama dengan (=)
+                    } else {
+                        scrollLeftButton.classList.remove("hidden"); // Menggunakan .remove tanpa tanda sama dengan (=)
+                    }
+
+                    // Menambahkan toleransi kecil (10 piksel) untuk perbandingan
+                    if (scrollContent.scrollLeft + scrollContent.clientWidth + 10 >= scrollContent.scrollWidth) {
+                        scrollRightButton.classList.add("hidden");
+                    } else {
+                        scrollRightButton.classList.remove("hidden");
+                    }
+
+
+                });
+
+            </script>
+
+            <h5 class="mt-3">Populer this week</h5>
+            <div class="d-flex flex-sm-row flex-column gap-3 px-2">
+                <div class="w-100  rounded-3 d-flex flex-column justify-content-between kotak-kata p-2 py-3"
+                    style="height: 450px;">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="rounded-circle border" style="padding: 1.5px;">
+                            <img src="{% static 'img/default-profile.svg' %}" alt="Foto Profil"
+                                class="rounded-circle mr-2 border bg-white" width="45" height="45">
+                        </div>
+                        <div class="d-flex flex-column">
+                            <big class="fs-6 fw-bold">Dewi Pertiwi</big>
+                            <small>Admin Advante</small>
+                        </div>
+                    </div>
+                    <div style="width: 97%;" class="mx-auto text-kotak ">
+                        <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quisquam, voluptatibus quod
+                            nihil repudiandae nisi accusantium nam magni, vero doloremque numquam </small>
+                    </div>
+                </div>
+
+                <div class="w-100  rounded-3 d-flex flex-column justify-content-between kotak-kata  p-2 py-3"
+                    style="height: 450px;">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="rounded-circle border" style="padding: 1.5px;">
+                            <img src="{% static 'img/default-profile.svg' %}" alt="Foto Profil"
+                                class="rounded-circle mr-2 border bg-white" width="45" height="45">
+                        </div>
+                        <div class="d-flex flex-column">
+                            <big class="fs-6 fw-bold">Aditya Rahman</big>
+                            <small>Admin Advante</small>
+                        </div>
+                    </div>
+                    <div style="width: 97%;" class="mx-auto text-kotak ">
+                        <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit quisquam, voluptatibus quod
+                            nihil repudiandae nisi accusantium nam magni, vero doloremque numquam </small>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex  flex-column gap-2 mt-4 px-2">
+                <div class="d-flex gap-2">
+                    <div class="w-100  rounded-3 d-flex flex-column justify-content-between kotak-menu p-2 py-3">
+                        <img src="" alt=""><small>sdfsflksdfnlksdfn</small>
+
+                    </div>
+                    <div class="w-100  rounded-3 d-flex flex-column justify-content-between kotak-menu p-2 py-3">
+                        <img src="" alt=""><small>sdfsflksdfnlksdfn</small>
+                    </div>
+
+                </div>
+                <div class="d-flex gap-2">
+                    <div class="w-100  rounded-3 d-flex flex-column justify-content-between kotak-menu p-2 py-3">
+                        <img src="" alt=""><small>sdfsflksdfnlksdfn</small>
+
+                    </div>
+                    <div class="w-100  rounded-3 d-flex flex-column justify-content-between kotak-menu p-2 py-3">
+                        <img src="" alt=""><small>sdfsflksdfnlksdfn</small>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <h5 class="mt-lg-3">Recomendation for You</h5>
+                <i class='bx bx-list-ul fs-3 ' id="recomendation-button" style="cursor: pointer;"></i>
+
+            </div>
+            <main id="main-besar">
+                {% for product in products %}
+                <!-- postingan -->
+                <div class="card mb-3 border-0">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <!-- foto profil, nama, follow -->
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="rounded-circle border" style="padding: 1.5px;">
+                                <img src="{% static 'img/default-profile.svg' %}" alt="Foto Profil"
+                                    class="rounded-circle mr-2 border bg-white" width="45" height="45">
+                            </div>
+                            <div class="d-flex flex-column">
+                                <big class="fs-6 fw-bold">{{product.store_id}}</big>
+                                <small>{{product.store_id}}</small>
+                            </div>
+                        </div>
+
+                        <!-- follow, titik 3 -->
+                        <div>
+                            <button class="btn" style="background-color: black; color: white;">Follow</button>
+                        </div>
+                    </div>
+
+                    <!-- gambar postingan -->
+                    <!-- image gallery -->
+                    <div id="{{product.name_product}}" class="carousel slide pointer-event">
+                        <div class="carousel-inner ">
+                            {% if product.productimage_set.all %}
+                            <a href="">
+                                <div class="carousel-item active d-flex justify-content-center bg-light border border-top-0"
+                                    style="max-height: 700px; height: 700px;">
+                                    <img src="{{ product.productimage_set.first.image.url }}"
+                                        class="d-block img-fluid h-100 " alt="{% static 'img/default-profile.svg' %}">
+                                </div>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="card-body  p-3 bg-light">
+                        <div class="d-flex justify-content-between align-items-center ">
+                            <!-- likes -->
+                            <div class="d-flex gap-3 w-100">
+                                <div class="likes">
+                                    <i class='bx bx-heart fs-5'></i>
+                                    <span>123</span>
+                                </div>
+                                <!-- comments -->
+                                <div class="comments">
+                                    <i class='bx bx-message-square-dots fs-5'></i>
+                                    <span>45</span>
+                                </div>
+                                <!-- share -->
+                                <div class="share">
+                                    <i class='bx bxs-share-alt fs-5'></i>
+                                </div>
+                            </div>
+                            <!-- scroll indicator -->
+                            <div class="d-flex gap-3 w-100 justify-content-end">
+                                <div class=""><small>RP {{product.price}}</small></div>
+                                <!-- save -->
+                                <div class="save">
+                                    <i class='bx bx-bookmark fs-5'></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- keterangan gambar -->
+                        <div class="w-100 mt-2 d-flex flex-column">
+                            <div>
+                                <h6> <span class="fw-bold">{{product.name_product}}</span> {{product.description}}</h6>
+                            </div>
+                            <div>
+                                <small>{{product.upload_date}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </main>
+            <main id="main-kecil" class="hilang">
+                <div class="row px-3 px-sm-0">
+
+
+                    {% for product in products %}
+
+
+                    <div class="col-6 col-xl-4 mb-4">
+                        <a href="/shop/detailbarang/{{data.slug}}" style="text-decoration: none;">
+                            <div class="card h-100 p-2 border-0 bg-light">
+                                <div class=" p-2 d-flex justify-content-center border"
+                                    style="height: 200px; max-height: 200px">
+                                    {% if product.productimage_set.all %}
+                                    <img src="{{ product.productimage_set.first.image.url }}" class=" img-fluid h-100"
+                                        alt="{% static 'img/default-profile.svg' %}">
+                                    {% endif %}
+                                </div>
+                                <div class="">
+                                    <small class="fw-bold">{{product.name_product}}</small>
+                                    <div class=""
+                                        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; ">
+                                        <small>{{product.description}}</small>
+                                    </div>
+                                </div>
+                                <div class=" d-flex flex-column " style="width: 100%; ">
+                                    <h6 style="color: black;">RP {{product.price}}</h6>
+                                    <div class="d-flex justify-content-between align-items-center ">
+                                        <!-- likes -->
+                                        <div class="d-flex gap-3 w-100">
+                                            <div class="likes">
+                                                <i class='bx bx-heart fs-6'></i>
+                                                <span>123</span>
+                                            </div>
+                                            <!-- comments -->
+                                            <div class="comments">
+                                                <i class='bx bx-message-square-dots fs-6'></i>
+                                                <span>45</span>
+                                            </div>
+                                            <div class="save">
+                                                <i class='bx bx-bookmark fs-6'></i>
+                                            </div>
+                                        </div>
+                                        <!-- scroll indicator -->
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+            </main>
+
+            <script>
+                document.querySelector('#recomendation-button').addEventListener('click', function () {
+                    document.querySelector('#main-kecil').classList.toggle('hilang');
+                    document.querySelector('#main-besar').classList.toggle('hilang');
+                });
+            </script>
+        </div>
+
+        <div class="col-sm-3 order-1 order-sm-2 ">
+            <!-- sider kanan -->
+            <!-- form search -->
+            <h5 class="mt-lg-3"> trendings</h5>
+            <form action="" class="d-none d-lg-block w-100">
+                <input type="text" class="form-control rounded-5" style="background-color: #E2EBDE;" name="" id=""
+                    placeholder="search">
+            </form>
+            <div class=" gap-2 w-100 d-none d-lg-flex  mt-1 align-items-center">
+                <i class='bx bx-map-alt fs-5'></i>
+                <small style="font-size: 0.8rem;">Main Location : Bandung</small>
+            </div>
+            <div class="w-100  mt-4 rounded-3 mb-4" style="height: 200px; background-color: rgb(241, 220, 224);">
+            </div>
+            <div class="d-flex gap-3 flex-sm-wrap flex-nowrap flex-lg-nowrap">
+                <div class="w-100  rounded-3 " style="height: 200px; background-color: #f0e98ea2;">
+                </div>
+
+                <div class="w-100  rounded-3 " style="height: 200px;   background-color: #b5e79d96;">
+                </div>
+            </div>
+            <div class="w-100  mt-4 rounded-3 mb-3" style="height: 200px; background-color: rgb(241, 220, 224);">
+            </div>
+
+        </div>
+
+
+
+
+
+        {% endblock conten %}

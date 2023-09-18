@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% include 'accounts/snippets/css.html' %}
+{% include 'accounts/snippets/jstop.html' %}
+
+{% endblock newsnippet %}
+
+{% block conten %}
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+    <div class="toast-container position-fixed end-0 p-3">
+        {% if form.errors %}
+
+        {% for error in form.non_field_errors %}
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <strong class="me-auto">Error</strong>
+                <small class="text-muted">2 seconds ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ error }}
+            </div>
+        </div>
+        {% endfor %}
+
+        {% for field in form %}
+
+        {% for error in field.errors %}
+
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+
+            <div class="toast-header">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <strong class="me-auto">Error</strong>
+                <small class="text-muted">2 seconds ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{error}}
+            </div>
+        </div>
+
+
+        {% endfor %}
+
+        {% endfor %}
+
+        {% endif %}
+
+    </div>
+</div>
+
+<div class=" mw-100 " style="margin-top: 20px;">
+    <div class="card mb-3 border-0 card-style container">
+        <div class="row g-0 overflow-hidden rounded d-flex align-items-center">
+            <div class=" col-lg-6 ">
+                <img class="w-100 img-fluid" src="../../../static/img/Desain tanpa judul (14).svg" alt="">
+            </div>
+            <div class=" col-lg-6 ">
+                <div class="card-body p-sm-5 mb-2">
+                    <small class="float-end mt-2">you not have account? <a href="{% url 'signup' %}">Sign up</a></small>
+
+                    <form action="" class="px-5" method="post">
+                        <h1 class="mt-5">Welcome back</h1>
+
+                        {% csrf_token %}
+                        <div class=" form-group mb-3">
+                            {{form.username}}
+                        </div>
+                        <div class=" form-group mb-3">
+                            {{form.password}}
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class=" form-group">
+                                {{form.remember_me}}
+                                <small>{{form.remember_me.label_tag}}</small>
+                            </div>
+                            <div class=" form-group">
+                                <small> <a href="">forget password</a> </small>
+                            </div>
+                        </div>
+                        <div class=" form-group mb-3">
+                            <button class=" rounded btn btn-dark w-100">Sign In</button>
+                        </div>
+                        <hr>
+                        <small>Or Sign-UP With : </small>
+                        {{form.captcha}}
+                    </form>
+                    <div class="d-flex px-5 w-100 gap-3">
+                        <div class="flex-fill">
+                            <a href="{% url 'social:begin' 'google-oauth2' %}">
+                                <button class=" py-1 px-2 align-items-center btn btn-outline-dark  w-100">
+                                    <img src="../../../static/img/google.svg" class="img-fluid" style="width: 26px;"
+                                        alt="">
+                                    <span class="ms-1">Google</span>
+                                </button>
+                            </a>
+                        </div>
+                        <div class="flex-fill">
+                            <button class=" py-1 px-2 align-items-center btn btn-outline-dark w-100">
+                                <img src="../../../static/img/facebook.svg" class="img-fluid" style="width: 26px;"
+                                    alt="">
+                                <span class="ms-1">Facebook</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock conten %}

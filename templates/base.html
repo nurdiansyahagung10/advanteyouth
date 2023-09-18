@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/logo-image.svg' %}" />
+
+  {% block newmeta %}
+    
+  {% endblock newmeta %}
+    
+  <title> {% block tittle %} {% endblock tittle %}</title>
+  
+  {% include 'snippets/css.html' %}
+  {% include 'snippets/jstop.html' %}
+
+  {% block newsnippet %}
+    
+  {% endblock newsnippet %}
+    
+
+</head>
+<body class="bg-light">
+
+    {% block heading %}
+    {% endblock heading %}
+
+    {% block conten %}
+        
+    {% endblock conten %}
+    {% include 'snippets/jsbottom.html' %}
+      
+</body>
+</html>
+
+   
+
+
+
+    
+        
+        
+
+
+

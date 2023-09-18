@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% endblock newsnippet %}
+
+{% block conten %}
+
+{% if form.errors %}
+
+{% for error in form.non_field_errors %}
+
+        {{ error }}
+    
+{% endfor %}
+
+{% for field in form %}
+
+{% for error in field.errors %}
+
+
+        {{error}}
+
+
+{% endfor %}
+
+{% endfor %}
+
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div class="form-group">
+    <label for="{{ form.PhoneNumber.id_for_label }}">Nomor Telepon:</label>
+    {{ form.PhoneNumber }}
+    {{ form.PhoneNumber.errors }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.email.id_for_label }}">Email:</label>
+    {{ form.email }}
+    {{ form.email.errors }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.store_name.id_for_label }}">Nama Toko:</label>
+    {{ form.store_name }}
+    {{ form.store_name.errors }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.store_description.id_for_label }}">Deskripsi Toko:</label>
+    {{ form.store_description }}
+    {{ form.store_description.errors }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.Province.id_for_label }}">Provinsi:</label>
+    {{ form.Province }}
+    {{ form.Province.errors }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.city.id_for_label }}">Kota:</label>
+    {{ form.city }}
+    {{ form.city.errors }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.district.id_for_label }}">Kecamatan:</label>
+    {{ form.district }}
+    {{ form.district.errors }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.post_code.id_for_label }}">Kode Pos:</label>
+    {{ form.post_code }}
+    {{ form.post_code.errors }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.store_open.id_for_label }}">Jam Buka:</label>
+    {{ form.store_open }}
+    {{ form.store_open.errors }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.store_closed.id_for_label }}">Jam Tutup:</label>
+    {{ form.store_closed }}
+    {{ form.store_closed.errors }}
+  </div>
+  <button type="submit" class="btn btn-primary">Simpan</button>
+</form>
+
+
+{% endblock conten %}

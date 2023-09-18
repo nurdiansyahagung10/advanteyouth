@@ -1,0 +1,103 @@
+<!-- add_products.html -->
+{% extends 'base.html' %}
+
+{% block conten %}
+
+{% for field in form %}
+    
+    {% for error in field.errors %}
+        {{error}}
+    {% endfor %}
+        
+{% endfor %}
+    
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.image_product.label_tag }}
+    {{ form.image_product}} <br>
+    {{ form.name_product.label_tag }}
+    {{ form.name_product}}<br>
+    {{ form.description.label_tag }}
+    {{ form.description}}<br>
+    {{ form.category.label_tag }}
+    {{ form.category}}<br>
+    {{form.price.label_tag}}
+    {{form.price}}
+
+    <div class="d-none">
+    {{ form.warna}}
+    {{ form.ukuran}}
+    {{ form.rasa}}
+    </div>
+    
+    <div id="extra-forms-warna">
+        <label>Warna:</label><br>
+        {% for extra_field in form.extra_fields %}
+            {% if extra_field.name|slice:":14" == "extra_field_warna" %}
+                {{ extra_field }}<br>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <button type="button" id="add-form-warna">Tambah</button>
+    <button type="button" id="remove-form-warna">Kurang</button><br><br>
+
+    <div id="extra-forms-ukuran">
+        <label>Ukuran:</label><br>
+        {% for extra_field in form.extra_fields %}
+            {% if extra_field.name|slice:":15" == "extra_field_ukuran" %}
+                {{ extra_field }}<br>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <button type="button" id="add-form-ukuran">Tambah</button>
+    <button type="button" id="remove-form-ukuran">Kurang</button><br><br>
+
+    <div id="extra-forms-rasa">
+        <label>Rasa:</label><br>
+        {% for extra_field in form.extra_fields %}
+            {% if extra_field.name|slice:":13" == "extra_field_rasa" %}
+                {{ extra_field }}<br>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <button type="button" id="add-form-rasa">Tambah</button>
+    <button type="button" id="remove-form-rasa">Kurang</button><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+const fields = ['warna', 'ukuran', 'rasa'];
+const maxExtraForm = 4;
+const extraFormCount = {
+    'warna': 0,
+    'ukuran': 0,
+    'rasa': 0
+};
+
+fields.forEach(field => {
+    document.querySelector(`#add-form-${field}`).addEventListener('click', () => {
+        if (extraFormCount[field] < maxExtraForm) {
+            const newForm = document.createElement('input');
+            newForm.setAttribute('type', 'text');
+            newForm.setAttribute('name', `extra_field_${field}_${extraFormCount[field]}`);
+            newForm.setAttribute('class', 'form-control');
+            document.querySelector(`#extra-forms-${field}`).appendChild(newForm);
+            extraFormCount[field]++;
+        }
+    });
+
+    document.querySelector(`#remove-form-${field}`).addEventListener('click', () => {
+        if (extraFormCount[field] > 0) {
+            const formToRemove = document.querySelector(`[name="extra_field_${field}_${extraFormCount[field] - 1}"]`);
+            formToRemove.parentNode.removeChild(formToRemove);
+            extraFormCount[field]--;
+        }
+    });
+});
+</script>
+{% endblock conten %}
+    
+
+

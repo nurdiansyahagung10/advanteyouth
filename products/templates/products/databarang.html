@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+ {% load static %} 
+ {% block tittle %} 
+ {{tittle}} 
+ {%endblock tittle %} 
+ 
+ {% block heading%}
+    <div class="row bg-white mx-auto p-2 rounded shadow-sm" style="width: 99%;">
+      
+      <div class="col-xl-5 col-md-5">
+        <div id="carouselExampleControlsNoTouching" style="width: 85%;" class="carousel slide mx-auto" data-bs-touch="false">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{slug.img_brng.url}}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{{slug.img_brng.url}}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{{slug.img_brng.url}}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+</div>
+
+<div class="col-xl-7 col-md-7 mt-4">
+        <h2>{{slug.nama_produk}}</h2>
+        <div class="d-flex align-items-center">
+          <p>4.5 <i class="fa fa-star" aria-hidden="true"></i>   |   200 terjual    |    Stok {{slug.stok}}</p>
+        </div>
+        <div class="bg-light p-4 pl-5 w-75 mt-4 rounded h-auto">
+          <h1>RP {{slug.harga}}</h1>
+        </div>
+      </div>
+      </div>
+{% endblock heading%}
+
+
+{% block conten %}
+      <div class="row bg-white mx-auto p-2 mt-4 shadow-sm rounded" style="width: 99%;">
+        <div class="col-sm-8 py-4 px-5">
+        <h1>Spesifikasi produk</h1>
+        <table class="mt-4 table" id="tablespek">
+          <tr>
+            <td>Bahan         : </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Jenis kelamin : </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Stok          : </td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-sm-4 py-4 px-5">
+        <h4>keterangan</h4>
+        <p>{{slug.deskripsi}}</p>
+      </div>
+      </div>
+{% endblock conten %}
+  

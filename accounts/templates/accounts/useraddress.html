@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% endblock newsnippet %}
+
+{% block conten %}
+
+{% if form.errors %}
+
+{% for error in form.non_field_errors %}
+
+        {{ error }}
+    
+{% endfor %}
+
+{% for field in form %}
+
+{% for error in field.errors %}
+
+
+        {{error}}
+
+
+{% endfor %}
+
+{% endfor %}
+
+{% endif %}
+
+<script type='text/javascript'
+    src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=ArNisPgwcsQaOmrhXYU4WDFykrY0btbKoTssZYNJNW0cI1IaXuKhiuOywAP8jPf_'
+    async defer></script>
+
+
+
+<script type="text/javascript">
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            document.getElementById("location").value = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var locationRequest = new XMLHttpRequest();
+        locationRequest.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var response = JSON.parse(this.responseText);
+                var resource = response.resourceSets[0].resources[0];
+                var address = resource.address;
+                var formattedAddress = resource.address.formattedAddress;
+                var addressParts = formattedAddress.split(',');
+                var kecamatan = address.locality || '';
+                var kota = address.adminDistrict2 || '';
+                var provinsi = address.adminDistrict || '';
+                var kodePos = address.postalCode || '';
+                var alamat = addressParts.slice(0, 1).join(', '); // Menggabungkan jalan dan nomor rumah
+
+                document.getElementById("kecamatan").value = kecamatan.trim();
+                document.getElementById("kota").value = kota.trim();
+                document.getElementById("provinsi").value = provinsi.trim();
+                document.getElementById("kodePos").value = kodePos.trim();
+                document.getElementById("alamat").value = alamat.trim();
+            }
+        };
+        locationRequest.open("GET", "https://dev.virtualearth.net/REST/v1/Locations/" + latitude + "," + longitude + "?o=json&key=ArNisPgwcsQaOmrhXYU4WDFykrY0btbKoTssZYNJNW0cI1IaXuKhiuOywAP8jPf_", true);
+        locationRequest.send();
+    }
+</script>
+    <button onclick="getLocation()">Show Location</button><br />
+
+<form  method="post">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <button>Add Address</button>
+</form>
+
+{% endblock conten %}

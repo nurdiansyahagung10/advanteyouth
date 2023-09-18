@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% include 'accounts/snippets/css.html' %}
+{% include 'accounts/snippets/jstop.html' %}
+
+{% endblock newsnippet %}
+
+
+{% block conten %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-3">
+      <div class="w-100 rounded shadow h-100">
+        <div class="d-flex flex-column align-items-center p-3 text-white">
+          <div class="rounded-circle bg-light" style="width: 50px;">
+            <img src="{% static 'img/jaket.svg' %}" alt="" class="img-fluid w-100">
+          </div>
+          <span class="nav-nama">{{ user }}</span>
+        </div>
+        <hr>
+        <ul class="nav flex-column">
+          <h5 class="nav-title">Kotak Masuk</h5>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/">chat</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/">ulasan</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/">pesanan di komplain</a>
+          </li>
+        </ul>
+        <hr>
+        <ul class="nav flex-column">
+          <h5 class="nav-title">Transaction</h5>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/">waiting payment</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/">history transaction</a>
+          </li>
+        </ul>
+        <hr>
+        <ul class="nav flex-column">
+          <h5 class="nav-title">Profil saya</h5>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/">item wishlist</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/">toko favorite</a>
+          </li>
+        </ul>
+        <hr>
+      </div>
+    </div>
+    <div class="col-xl-9">
+      <div class="w-100 rounded shadow h-100">
+        <ul class="d-flex list-unstyled gap-5 fs-4 pt-3 px-3">
+          <li class="nav-item">
+            <a href="" class="text-decoration-none">biodata diri</a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="text-decoration-none">daftar alamat</a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="text-decoration-none">keamanan</a>
+          </li>
+        </ul>
+        <hr>
+        <form action="" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="div">
+      </div>
+    </div>
+  </div>
+</div>
+    
+{% endblock conten %}
+    

@@ -1,0 +1,42 @@
+<h2>Pending Verifications</h2>
+<table>
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for verification in pending_verifications %}
+        <tr>
+            <td>{{ verification.user_id }}</td>
+            <td>{{ verification.verification_status }}</td>
+            <td>{{verification.verification_date}}</td>
+            <td>
+                <a href="{% url 'approve_verification' verification.pk %}">Approve</a>
+                <a href="{% url 'cancel_verification' verification.pk %}">Cancel</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Approved Accounts</h2>
+<table>
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for verification in approved_verifications %}
+        <tr>
+            <td>{{ verification.user_id }}</td>
+            <td>{{ verification.verification_status }}</td>
+            <td><a href="{% url 'cancel_verification' verification.pk %}">dellete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
