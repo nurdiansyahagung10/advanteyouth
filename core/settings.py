@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-en3ad2_-src88ki*1mg*jd&gl!q%jo&lm1j@yrmp2gfvj$suvt'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,13 +87,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE' : 'django.db.backends.mysql',
-        'NAME' : 'dbadvante',
-        'USER' : 'root',
-        'PASSWORD' : 'kumahaweh123',
-        'HOST' : 'localhost',
-        'PORT' : '3306',
-    }
+ 'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT'),    }
 }
 
 
@@ -178,36 +179,12 @@ import os
 
 # ...
 
-# Membuat direktori untuk log kesalahan jika belum ada
-if not os.path.exists('logs'):
-    os.makedirs('logs')
-
-# Konfigurasi logging
-LOGGING_DIR = os.path.join(BASE_DIR, 'logs')
-LOGGING_LEVEL = 'DEBUG'  # Sesuaikan level log sesuai kebutuhan Anda (DEBUG, INFO, ERROR, dll.)
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': LOGGING_LEVEL,
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOGGING_DIR, 'error.log'),
-        },
-    },
-    'root': {
-        'handlers': ['file'],
-        'level': LOGGING_LEVEL,
-    },
-}
 
 
 MEDIA_URL = '/home/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-BING_MAPS_API_KEY = 'ArNisPgwcsQaOmrhXYU4WDFykrY0btbKoTssZYNJNW0cI1IaXuKhiuOywAP8jPf_'
-
+BING_MAPS_API_KEY = config('BING_MAPS_API_KEY')
 
 DATA_UPLOAD_MAX_MAXMEMORY_SIZE = 5242880
 
