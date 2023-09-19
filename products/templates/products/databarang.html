@@ -64,10 +64,18 @@
           </tr>
         </table>
       </div>
-      <div class="col-sm-4 py-4 px-5">
-        <h4>keterangan</h4>
-        <p>{{slug.deskripsi}}</p>
-      </div>
+      <<!-- cart/templates/produk_detail.html -->
+<!-- ... (konten yang ada sebelumnya) ... -->
+
+<div class="col-sm-4 py-4 px-5">
+    <h4>keterangan</h4>
+    <p>{{slug.deskripsi}}</p>
+    <form method="post" action="{% url 'tambah_cart' slug.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Tambah ke Cart</button>
+    </form>
+</div>
+
       </div>
 {% endblock conten %}
   

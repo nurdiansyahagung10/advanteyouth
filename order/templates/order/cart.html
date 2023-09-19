@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% include 'accounts/snippets/css.html' %}
+{% include 'accounts/snippets/jstop.html' %}
+
+{% endblock newsnippet %}
+
+
+{% block conten %}
+{% include 'snippets/navluas.html' %}
+
+<div class="container-xxl">
+    <h1>Keranjang Belanja</h1>
+    <form method="post" action="{% url 'checkout' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            {% for cart_item in cartitem %}
+            <div class="card border-0 bg-light mb-3 p-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ cart_item.id }}"
+                            name="selected_items">
+                        <label class="form-check-label fw-bold" for="flexCheckDefault">
+                            {{cart_item.cart_product_id.store_id }}
+                        </label>
+                    </div>
+                    <form method="post" action="{% url 'hapus_item' cart_item.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-dark p-0 px-2">Hapus</button>
+                    </form>
+                </div>
+                <hr>
+                <div class="row g-0">
+                    <div class="col-md-4 col-12 d-flex justify-content-center border bg-white"
+                        style="max-height: 300px;">
+                        {% with product=cart_item.cart_product_id %}
+                        {% if product.productimage_set.all %}
+                        <img src="{{ product.productimage_set.first.image.url }}" class="d-block img-fluid h-100"
+                            alt="{% static 'img/default-profile.svg' %}">
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="col-md-8 col-12">
+                        <div class="card-body">
+                            <p class="card-text">{{ cart_item.cart_product_id.name_product }}</p>
+                            <p class="card-text fw-bold">Rp {{ cart_item.cart_total_harga|floatformat:2 }}</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">Checkout</button>
+        <a href="{% url 'checkout' %}">Checkout</a>
+
+    </form>
+    <h3>Total Harga: Rp {{ total_harga|floatformat:2 }}</h3>
+</div>
+{% endblock conten %}

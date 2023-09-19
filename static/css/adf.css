@@ -15,9 +15,6 @@ html{
       display: none;
     }
 
-     .card-style{
-  background-color: #242631;
- }
 
 
     
@@ -33,7 +30,7 @@ html{
 
 
 .btn-viewmore-satu{
-  background-color: #1d2026 !important; /* Warna latar belakang biru */
+  background-color: #0e0e0e !important; /* Warna latar belakang biru */
     border: 2px solid transparent !important; /* Border transparan untuk memberikan ruang bagi border-image */
     border-image-slice: 1; /* Menentukan potongan gambar gradient */
     border-radius: 5px !important; /* Menambahkan border-radius */
@@ -86,23 +83,24 @@ background-color: #f0e98ea2;
 
 .offcanvas-backdrop.fade.show {
   pointer-events:none;    
-  background-color: #242631 !important;
   opacity: 1 ;
 }
 
 .offcanvas-backdrop.fade{
-    background-color: #242631 !important;
-
+background-color: transparent;
   opacity: 0;
 }
 
 nav{
   transition: 0.3s ease-in-out;
+  width: 100%;
 }
 
 nav.scrolled{
-  background-color: #f8f9fa;
   box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
+}
+nav.collored{
+  background-color: #f8f9fa;
 }
 
 
@@ -138,7 +136,7 @@ transition: .25s ease-in-out;
 
 
 .animated-icon2 span {
-background: black;
+background: #0e0e0e;
 }
 
 
@@ -162,7 +160,7 @@ width: 100%;
 .nav-item:hover i {
   background-color: #E2EBDE;
   border-radius: 100%;
-  color:  #0e0e0e;
+  color:  black;
   padding: 3px;
 }
 
@@ -171,6 +169,23 @@ top: 8px;
 width: 70%;
 transform: translateX(8px);
 }
+
+/* Gaya awal tombol kembali ke atas */
+#scrollToTopBtn {
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  right: 135px;
+  z-index: 99;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
 
 .menu-dropdown{
   transition: 0.5s ease-in-out;
@@ -199,7 +214,6 @@ transform: translateX(8px);
 -o-transform: rotate(45deg);
 transform: rotate(45deg);
 top: 8px;
-background: linear-gradient(135deg, #5c6cd7, #f5b4fa);
 }
 
 .animated-icon2.open span:nth-child(2) {
@@ -208,7 +222,6 @@ background: linear-gradient(135deg, #5c6cd7, #f5b4fa);
 -o-transform: translateX(45px);
 transform: translateX(45px);
 opacity: 0;
-background: linear-gradient(135deg, #5c6cd7, #f5b4fa);
 }
 
 .animated-icon2.open span:nth-child(3) {
@@ -218,8 +231,8 @@ background: linear-gradient(135deg, #5c6cd7, #f5b4fa);
 transform: rotate(-45deg);
 top: 8px;
 width: 100%;
-background: linear-gradient(135deg, #5c6cd7, #f5b4fa);
 }
+
 
 .second-button{
   outline: none !important;
@@ -237,7 +250,10 @@ background: linear-gradient(135deg, #5c6cd7, #f5b4fa);
   }
 
   .nav-animation li a:hover{
-    color: white !important;
+    color: #0e0e0e !important;
+  }
+  .nav-animation li a{
+    color: #d4d2de !important;
   }
   
   .offcanvas-start{
@@ -247,7 +263,7 @@ background: linear-gradient(135deg, #5c6cd7, #f5b4fa);
 
 
 .offcanvas-body{
-  border-top: 1px solid #5d5d5e !important;
+  background-color: #f8f9fa;
   }
 
 
