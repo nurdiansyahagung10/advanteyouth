@@ -2,19 +2,22 @@
 
 
 
-<nav class="navbar navbar-expand-lg mb-2 border-bottom navbar-dark top-0 z-3 position-sticky  " id="navbar">
+<nav class="navbar navbar-expand-lg mb-2  navbar-dark top-0 z-3 position-sticky  " id="navbar">
   <div class="container-fluid d-flex flex-wrap">
     <a class="navbar-brand d-none d-sm-block" style="color: #0e0e0e;" href="index.html">
       YOUTH
     </a>
     <form class="form-inline w-25 flex-fill">
-      <input class="form-control mr-sm-2 w-100 rounded-5 border0" style="height: 30px; background-color: #E2EBDE;" type="search" placeholder="Cari"
+      <input class="form-control mr-sm-2 w-100 input-home rounded-5 border-0 bg-white" style="height: 30px; " type="search" placeholder="Cari"
         aria-label="Search">
     </form>
 
     <div class="icon-nav" style="font-size: 1.3rem; transform: translateX(9px);">
 
-      <i class='bx bx-cart-alt p-2'></i>
+      <a href="{% url 'cart' %}" class="text-decoration-none text-black">
+              <i class='bx bx-cart-alt p-2'></i>
+
+      </a>
       <i class='bx bx-envelope p-2'></i>
       <i class='bx bx-bell p-2'></i>
     </div>
@@ -34,7 +37,7 @@
         {% endif %}
         <small>toko</small>
       </li>
-      <a href="{% url 'profile' username=user.username %}" style="text-decoration: none;">
+      <a href="{% url 'profile' username=user.username %}" style="text-decoration: none; color: black;" >
         <li class="nav-item d-flex align-items-center gap-2">
           <div class="rounded-circle bg-light" style="width: 32px;">
             <img src="{% static 'img/jaket.svg' %}" alt="" class="img-fluid w-100">
@@ -63,7 +66,7 @@
     {% endif %}
 
 
-    <button class="navbar-toggler second-button d-block mb-3" style=" transform: translateX(9px);" type="button"
+    <button class="navbar-toggler second-button d-block " style=" transform: translateX(9px); margin-bottom: 18px;" type="button"
       data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarExample"
       aria-controls="offcanvasNavbarExample">
       <div class="animated-icon2 ">

@@ -1,121 +1,55 @@
-# cart/views.py
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import cartmodel  # Pastikan Anda mengimpor model cart yang sesuai
-from products.models import product  # Pastikan Anda mengimpor model product yang sesuai
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from .models import Cart, CartItem,Order
+from .forms import ShippingForm,PaymentForm
 
-from decimal import Decimal  # Import Decimal
-
-
-# ... kode lainnya ...
 
 def checkout(request):
-    user = request.user
-    cartitem = cartmodel.objects.filter(cart_id=user)
-    
-    # Membuat daftar produk yang terkait dengan setiap item dalam keranjang belanja
-    products = []
-    for cart_item in cartitem:
-        product_data = {
-            'product': cart_item.cart_product_id,
-            'quantity': cart_item.cart_quantity,
-            'total_harga': cart_item.cart_total_harga,
-        }
-        products.append(product_data)
-
-    total_harga = sum(item['total_harga'] for item in products)
-    
-    # Jika pengguna mengirimkan pesanan
+    cart, _ = Cart.objects.get_or_create(cart_user_id=request.user)
+    total_quantity = sum([item.quantity for item in cart.items.all()])  # Memindahkan baris ini ke luar blok if
     if request.method == 'POST':
-        # Buat pesanan dan tambahkan produk yang dipesan ke dalamnya
-        order = cartmodel.objects.create(user=user, total_harga=total_harga)
-        for product_data in products:
-            cartmodel.objects.create(
-                order=order,
-                product=product_data['product'],
-                quantity=product_data['quantity'],
-                total_harga=product_data['total_harga'],
-            )
-        
-        # Hapus item keranjang belanja pengguna
-        cartitem.delete()
-        
-        # Redirect pengguna ke halaman terima kasih atau halaman lain yang sesuai
-        return redirect('thank_you')
-    
-    context = {
-        'cartitem': cartitem,
-        'total_harga': total_harga,
-        'products': products,
-    }
-    
-    return render(request, 'order/cart.html', context)
+        shipping_form = ShippingForm(request.POST)
+        payment_form = PaymentForm(request.POST)
+        if shipping_form.is_valid() and payment_form.is_valid():
+            # Simpan informasi pengiriman dan pembayaran
+            shipping = shipping_form.save()
+            payment = payment_form.save()
 
+            # Proses checkout
+            # Buat objek Order baru
+            order = Order.objects.create(user=request.user, shipping=shipping, payment=payment)
 
-def tambah_cart(request, product_id):
-    # Cek apakah ada entri keranjang yang sesuai dengan produk dan pengguna saat ini
-    product_instance = get_object_or_404(product, id=product_id)
-    cart_item, created = cartmodel.objects.get_or_create(
-        cart_id=request.user,
-        cart_product_id=product_instance,
-        defaults={
-            'cart_quantity': 1,
-            'cart_total_harga': Decimal(product_instance.price),  # Konversi harga ke Decimal
-        }
-    )
+            # Pindahkan item dari Cart ke Order
+            for item in cart.items.all():
+                item.order = order
+                item.cart = None
+                item.save()
 
-    # Jika entri keranjang sudah ada, tambahkan satu unit ke jumlahnya
-    if not created:
-        cart_item.cart_quantity += 1
-        cart_item.cart_total_harga += Decimal(product_instance.price)  # Konversi harga ke Decimal
-        cart_item.save()
+            # Kosongkan Cart
+            cart.delete()
 
-    # Ambil URL referer (halaman sebelumnya)
-    referer = request.META.get('HTTP_REFERER', None)
-
-    # Jika URL referer ada, arahkan pengguna kembali ke halaman tersebut
-    if referer:
-        return HttpResponseRedirect(referer)
+            return redirect('checkout_success')
     else:
-        # Jika tidak ada URL referer, Anda dapat mengarahkan pengguna ke halaman keranjang atau halaman lain yang sesuai
-        return redirect('cart')  # Redirect ke halaman keranjang atau halaman lain yang sesuai
+        shipping_form = ShippingForm()
+        payment_form = PaymentForm()
+    context = {
+        'cart': cart,
+        'shipping_form': shipping_form,
+        'payment_form': payment_form,
+        'total_quantity': total_quantity,  # Sekarang total_quantity selalu didefinisikan
+    }
+    return render(request, 'order/checkout.html', context)
 
 
-from .models import cartmodel, OrderItem, Order
-# ...
-
-def cart(request):
-    user = request.user
-    try:
-        cart = cartmodel.objects.get(cart_id=user)
-        order_items = OrderItem.objects.filter(cartmodel=cart)
-
-        total_harga = sum(item.subtotal() for item in order_items)
-
-        context = {
-            'order_items': order_items,
-            'total_harga': total_harga,
-        }
-
-        return render(request, 'order/cart.html', context)
-
-    except cartmodel.DoesNotExist:
-        # Handle jika keranjang belanja pengguna tidak ditemukan
-        # Anda bisa menambahkan pesan atau tindakan lain sesuai kebutuhan
-        return render(request, 'order/empty_cart.html')  # Gantilah dengan template yang sesuai
-
-
-def hapus_item(request, cart_item_id):
-    # Cari item keranjang belanja berdasarkan cart_item_id
-    try:
-        cart_item = cartmodel.objects.get(cart_product_id = cart_item_id)
-
-        # Pastikan item milik pengguna yang sedang masuk
-        if cart_item.cart_id == request.user:
-            # Hapus item dari keranjang belanja
-            cart_item.delete()
-    except cartmodel.DoesNotExist:
-        pass
-
-    # Redirect pengguna kembali ke halaman keranjang belanja
-    return redirect('keranjang')
+    
+def cart_view(request):
+    cart = Cart.objects.get(cart_user_id=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    total_quantity = sum([item.quantity for item in cart_items])
+    total_price = cart.total_price()
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+        'total_quantity': total_quantity,
+        'total_price': total_price,
+    }
+    return render(request, 'order/cart.html', context)

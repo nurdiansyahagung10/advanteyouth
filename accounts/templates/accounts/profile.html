@@ -19,15 +19,17 @@
 {% block conten %}
 {% include 'snippets/navluas.html' %}
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xl-2 col-md-4">
-      <div class="w-100 rounded shadow h-100 p-3 ">
-        <div class="d-flex flex-column align-items-center ">
-          <div class="rounded-circle bg-light" style="width: 50px;">
+
+<div class="container-xxl " style="margin-top: -10px;">
+  <div class="row gap-3 p-3">
+    <div class="col-lg-2  p-3 rounded-3 shadow-sm bg-white">
+        <div class="d-flex  justify-content-between align-items-center ">
+          <div class="d-flex  flex-column align-items-lg-center">
+          <div class="rounded-circle bg-light w-25" >
             <img src="{% static 'img/jaket.svg' %}" alt="" class="img-fluid w-100">
           </div>
-          <span class="nav-nama text-black">{{ user }}</span>
+          <span class="nav-nama text-black fw-bold">{{ user }}</span>
+        </div>
         </div>
         <hr>
         <ul class="nav flex-column" >
@@ -64,22 +66,32 @@
         </ul>
         <hr>
       </div>
-    </div>
-    <div class="col-xl-10 col-md-8">
-      <div class="w-100 rounded shadow h-100">
-        <ul class="d-flex list-unstyled gap-5 fs-4 pt-3 px-3">
-          <li class="nav-item">
-            <a href="" class="text-decoration-none">biodata diri</a>
+
+      <style>
+        .nav-profil{
+          color: #006667 !important;
+        }
+
+        .nav-hiasan{
+          position: absolute;
+        }
+
+      </style>
+    <div class="col  w-100 shadow-sm bg-white rounded-3 p-3">
+        <ul class=" list-unstyled gap-5 fs-5 d-none d-lg-flex pt-3 px-3">
+            <div class="nav-hiasan"></div>
+          <li class="">
+            <a href="" class="text-decoration-none text-muted nav-profil">biodata diri</a>
           </li>
-          <li class="nav-item">
-            <a href="" class="text-decoration-none">daftar alamat</a>
+          <li class="">
+            <a href="{% url 'address_list' %}" class="text-decoration-none text-muted">daftar alamat</a>
           </li>
-          <li class="nav-item">
-            <a href="" class="text-decoration-none">keamanan</a>
+          <li class="">
+            <a href="" class="text-decoration-none text-muted">keamanan</a>
           </li>
         </ul>
-        <hr>
-        <form action="" method="post">
+<div class="">
+        <form action="" method="post" class="mt-5">
           {% csrf_token %}
           {{ form.as_p }}
           <button type="submit" class="btn btn-primary">Submit</button>
@@ -88,8 +100,8 @@
       <div class="div">
       </div>
     </div>
+    </div>
   </div>
-</div>
     
 {% endblock conten %}
     

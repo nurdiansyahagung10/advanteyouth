@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.http import JsonResponse
 from django.contrib.auth import get_user_model, login, logout, authenticate 
 from .forms import SignUpForm, ProfileForm, SignForm,SellerVerificationForm,AddressForm,StoreForm
 from django.contrib.auth.decorators import login_required
@@ -6,7 +7,7 @@ from django.contrib import messages
 from django.conf import settings
 from .decorators import user_not_authenticated
 from django.contrib.auth.decorators import permission_required
-
+from .models import UserAddress
 # Create your views here.
 
 @user_not_authenticated
@@ -61,12 +62,7 @@ def SignUpView(request):
                 'form': form
             }
             return render(request, 'accounts/signup.html', context)
-    else:
-        form = SignUpForm()
-        context = {
-            'form': form
-        }
-        return render(request, 'accounts/signup.html', context)
+
     
 
 
@@ -117,7 +113,6 @@ def AddressView(request):
         form = AddressForm()
         context = {
             'form': form,
-
         }
         return render (request, 'accounts/useraddress.html',context)
     
@@ -127,34 +122,41 @@ def AddressView(request):
                 user_address = form.save(commit=False)
                 user_address.UserAddressId = request.user  # Asumsi Anda ingin mengaitkan alamat dengan pengguna yang sedang masuk
                 user_address.save()
-                return redirect('address_list')  # Ganti 'address_list' dengan nama URL yang sesuai untuk menampilkan daftar alamat
-
+                return redirect('address_list')
             else:
-                form = AddressForm()
+                context = {'form': form}
+                return render(request, 'accounts/useraddress.html', context)
 
-            context = {'form': form}
-            return render(request, 'accounts/useraddress.html', context)
+@login_required()
+def list_address(request):
+    if request.method == 'GET':
+        form = UserAddress.objects.filter(UserAddressId = request.user)
+        context = {
+            'form': form,
+        }
+        return render (request, 'accounts/list_address.html',context)
 
 
 def add_store(request):
     # Periksa apakah pengguna sudah memiliki toko
     if request.user.has_store:
-        return redirect('halaman_tidak_diizinkan')  # Redirect jika sudah memiliki toko
+        return redirect('store')  # Redirect jika sudah memiliki toko
 
-    if request.method == 'POST':
-        form = StoreForm(request.POST)
-        if form.is_valid():
-            data = form.save(commit=False)
-            data.store_seller_id = request.user  # Assign pengguna ke toko
-            data.save()
-            
-            # Set has_store menjadi True setelah toko dibuat
-            request.user.has_store = True
-            request.user.save()
-            
-            return redirect('data_tersimpan')
     else:
-        form = StoreForm()
+        if request.method == 'POST':
+            form = StoreForm(request.POST)
+            if form.is_valid():
+                data = form.save(commit=False)
+                data.store_seller_id = request.user  # Assign pengguna ke toko
+                data.save()
+                
+                # Set has_store menjadi True setelah toko dibuat
+                request.user.has_store = True
+                request.user.save()
+                
+                return redirect('home')
+        else:
+            form = StoreForm()
 
     return render(request, 'accounts/store.html', {'form': form})
 

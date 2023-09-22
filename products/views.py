@@ -1,9 +1,10 @@
 # views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import product,ProductImage
 from django.contrib.auth.decorators import login_required 
 from .forms import ProductForm
 from django.contrib.auth.decorators import permission_required
+from order.models import Cart,CartItem
 
 @permission_required('products.add_product', login_url=None, raise_exception=True)
 def create_product(request):
@@ -29,7 +30,7 @@ def create_product(request):
                 product_image = ProductImage(product=product_instance, image=uploaded_file)
                 product_image.save()
 
-            return redirect('my-form')  # Ganti 'my-form' dengan URL yang sesuai
+            return redirect('store')  # Ganti 'my-form' dengan URL yang sesuai
     else:
         form = ProductForm()
     
@@ -37,10 +38,25 @@ def create_product(request):
 
 
 @login_required()
-def databarang (request, slug):
-    detailbarang = product.objects.get(slug=slug)
+def databarang(request, slug):
+    products = get_object_or_404(product, slug=slug)
+    cart, _ = Cart.objects.get_or_create(cart_user_id=request.user)
+    
+    if request.method == 'POST':
+        quantity = request.POST.get('quantity')
+        if quantity is not None:
+            quantity = int(quantity)
+            if quantity > 0:
+                cart_item, created = CartItem.objects.get_or_create(cart=cart, product_id=products, defaults={'quantity': quantity})
+                if not created:
+                    cart_item.quantity += quantity
+                cart_item.save()
+                
+                # Redirect back to the previous page (referrer)
+                return redirect(request.META.get('HTTP_REFERER', 'detailbarang'))
+    
     context = {
-        'slug' : detailbarang,
+        'product': products,
     }
     return render(request, 'products/databarang.html', context)
 

@@ -22,6 +22,9 @@ class CustomUser(AbstractUser):
     is_seller = models.BooleanField(default=False)
     has_store = models.BooleanField(default=False)
 
+    def has_address(self):
+        return UserAddress.objects.filter(UserAddressId=self).exists()
+
     def __str__(self):
         return self.username
 
@@ -110,11 +113,10 @@ class UserAddress(models.Model):
     city = models.CharField(max_length=100)
     district = models.CharField(max_length=100)
     post_code = models.CharField(max_length=100)
-    street = models.CharField(max_length=100)
+    street = models.CharField(max_length=100, unique=True)
     detail = models.TextField(null=True)
     address_for = models.CharField(max_length=10, choices=[('kantor', 'Kantor'), ('rumah', 'Rumah')])    
     Main_address = models.BooleanField(default=False)
-
 
     def save(self, *args, **kwargs):
     # Jika alamat ini akan menjadi alamat utama, maka set alamat utama lainnya ke False

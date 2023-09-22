@@ -65,14 +65,28 @@ transition: 0.3s ease-in-out;
 
 
 .kotak-kata:nth-child(1){
-background-color: #f0e98ea2;
+  background-image: url('/static/img/gambarhiasankotak.svg');
+  background-size: cover;
+  background-position: center;
+  color: white;
 }
+
 .kotak-kata:nth-child(2){
-  background-color: #b5e79d96;
+  background-image: url('/static/img/downlo.jpeg');
+  background-size: cover;
+  background-position: center;
+  color: white;
 }
 
 .kotak-menu{
-  background-color: #E2EBDE;
+  color: #006667;
+  background-color: #00656715;
+  border: 1px solid #006667;
+}
+.kotak-menu-satu{
+  background-color: #ffbc0015;
+  border: 1px solid #ffbc00;
+  color: #ffbc00;
 }
 
 
@@ -100,7 +114,7 @@ nav.scrolled{
   box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
 }
 nav.collored{
-  background-color: #f8f9fa;
+  background-color: #f0f6f6;
 }
 
 
@@ -151,14 +165,19 @@ width: 100%;
 }
 
 .nav-item i, .nav-item a{
-  color: #d4d2de;
+  color: gray;
   transition: 0.3s ease-in-out;
   border-radius: 100%;
 
 }
 
+.input-home::placeholder {
+    color: black !important;
+}
+
+
 .nav-item:hover i {
-  background-color: #E2EBDE;
+  background-color: #ffd600;
   border-radius: 100%;
   color:  black;
   padding: 3px;
@@ -263,7 +282,7 @@ width: 100%;
 
 
 .offcanvas-body{
-  background-color: #f8f9fa;
+  background-color: #f0f6f6;
   }
 
 

@@ -85,16 +85,15 @@ class AddressForm (forms.ModelForm):
     Province = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'provinsi'}))
     city  = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kota'}))
     district  = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kecamatan'}))
-    pos_code  = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kodePos'}))
+    post_code  = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kodePos'}))
     street  = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'alamat'}))
     address_for = forms.ChoiceField(
         choices=[('kantor', 'Kantor'), ('rumah', 'Rumah')],
-        widget=forms.RadioSelect(attrs={'class': 'form-check-input'})
     )
 
     class Meta:
         model = UserAddress
-        fields = ['PhoneNumber','detail','Province','city','district','pos_code','street','address_for','Main_address']
+        fields = ['PhoneNumber','detail','Province','city','district','post_code','street','address_for','Main_address']
 
 
 

@@ -2,6 +2,8 @@
 
 {% load static %}
 
+<!-- ... di dalam form Anda ... -->
+
 {% block tittle %}
 
 {{tittle}}
@@ -84,7 +86,7 @@
 <form  method="post">
     {% csrf_token %}
 
-    {{form.as_p}}
+    {{form}}
 
     <button>Add Address</button>
 </form>

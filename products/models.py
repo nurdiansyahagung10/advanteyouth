@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 class product(models.Model):
     store_id = models.ForeignKey(Store, on_delete=models.CASCADE)
-    name_product = models.CharField(max_length=255)
+    name_product = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     CATEGORY_CHOICES = (
         ('', ''),

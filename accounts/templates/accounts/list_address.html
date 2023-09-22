@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block conten %}
+    
+    
+    <div class="container">
+        <h1 class="my-4">Daftar Alamat</h1>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID Alamat Pengguna</th>
+                        <th>Nomor Telepon</th>
+                        <th>Provinsi</th>
+                        <th>Kota</th>
+                        <th>Distrik</th>
+                        <th>Kode Pos</th>
+                        <th>Jalan</th>
+                        <th>Detail</th>
+                        <th>Alamat Untuk</th>
+                        <th>Alamat Utama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for address in form %}
+                    <tr>
+                        <td>{{ address.UserAddressId }}</td>
+                        <td>{{ address.PhoneNumber }}</td>
+                        <td>{{ address.Province }}</td>
+                        <td>{{ address.city }}</td>
+                        <td>{{ address.district }}</td>
+                        <td>{{ address.post_code }}</td>
+                        <td>{{ address.street }}</td>
+                        <td>{{ address.detail }}</td>
+                        <td>{{ address.get_address_for_display }}</td>
+                        <!-- Ini akan menampilkan 'Kantor' atau 'Rumah' -->
+                        <td>{{ address.Main_address }}</td> <!-- Ini akan menampilkan 'True' atau 'False' -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="{% url 'address' %}">ingin menambah alamat?</a>
+    </div>
+
+{% endblock conten %}

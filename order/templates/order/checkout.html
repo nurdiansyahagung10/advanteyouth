@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+</head>
+<body>
+    <h1>Checkout</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Shipping Information -->
+        <fieldset>
+            <legend>Shipping Information</legend>
+            {{ shipping_form.as_p }}
+        </fieldset>
+        
+        <!-- Payment Information -->
+        <fieldset>
+            <legend>Payment Information</legend>
+            {{ payment_form.as_p }}
+        </fieldset>
+        
+        <input type="submit" value="Place Order">
+    </form>
+    
+    <!-- Display Cart Summary -->
+    <h2>Cart Summary</h2>
+    <ul>
+        <li>Cart Total: Rp {{ cart.total_price }}</li>
+        <li>Items in Cart: {{ total_quantity }}</li>
+    </ul>
+    
+    <a href="{% url 'cart' %}">Back to Cart</a>
+</body>
+</html>
