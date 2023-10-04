@@ -28,8 +28,6 @@
             <div class="card border-0 mb-3 p-3 bg-white shadow-sm">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="{{ cart_item.id }}"
-                            name="selected_items">
                         <label class="form-check-label fw-bold" for="flexCheckDefault">
                             {{cart_item.product_id.store_id }}
                         </label>
@@ -47,15 +45,17 @@
                         {% endwith %}
                     </div>
                     <div class="col-md-8 col-12">
-                        <div class="card-body">
-                            <p>Total Kuantitas: {{ total_quantity }}</p>
-                                                            <p>Harga: {{ item.product_id.price }}</p>
 
                             {% for item in cart_items %}
-                                <div>
-                                <h3>{{ item.product.name }}</h3>
-                                <p>Jumlah: {{ item.quantity }}</p>
-                                                            <p>Total Harga: {{ total_price }}</p>
+                              <div class="card-body">
+    <h3>{{ item.product_id.name_product }}</h3>
+    <p>Jumlah: {{ item.quantity }}</p>
+    <p>Warna: {{ item.warna }}</p>
+    <p>Ukuran: {{ item.ukuran }}</p>
+    <p>Rasa: {{ item.rasa }}</p>
+    <p>Harga: Rp {{ item.product_id.price }}</p>
+    <p>Total Harga: Rp {{ total_price }}</p>
+</div>
 
                                 </div>
                             {% empty %}

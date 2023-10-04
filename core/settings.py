@@ -45,8 +45,10 @@ INSTALLED_APPS = [
     'order',
     'dashbord',
     'products',
+    'rest_framework',
     'captcha',
     'social_django',
+    'paypal.standard.ipn',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
@@ -196,3 +198,7 @@ from django.utils import timezone
 # settings.py
 
 TIME_ZONE = 'Asia/Jakarta'  # Ganti dengan zona waktu yang sesuai dengan kebutuhan Anda
+
+
+PAYPAL_RECEIVER_EMAIL = "sb-v2hbl27653478@business.example.com"
+PAYPAL_TEST = True

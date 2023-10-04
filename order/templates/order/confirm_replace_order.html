@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% include 'accounts/snippets/css.html' %}
+{% include 'accounts/snippets/jstop.html' %}
+
+{% endblock newsnippet %}
+
+
+{% block conten %}
+{% include 'snippets/navluas.html' %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" action="{% url 'replace_order' item_id=existing_item.id %}">
+                {% csrf_token %}
+                <p class="mb-3">Anda sudah memiliki item ini dalam keranjang. Ini data baru yang ada masukan. Apa ingin mengganti pesanan?</p>
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="{{ quantity }}" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="warna" class="form-label">Warna:</label>
+                    <input type="text" id="warna" name="warna" value="{{ warna }}" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="ukuran" class="form-label">Ukuran:</label>
+                    <input type="text" id="ukuran" name="ukuran" value="{{ ukuran }}" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="rasa" class="form-label">Rasa:</label>
+                    <input type="text" id="rasa" name="rasa" value="{{ rasa }}" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bx bx-pencil"></i> Ganti Pesanan
+                </button>
+                <a href="{% url 'cart' %}" class="btn btn-secondary">
+                    <i class="bx bx-arrow-left"></i> Kembali
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock conten %}

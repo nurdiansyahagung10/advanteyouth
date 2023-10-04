@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.http import JsonResponse
+from .decorators import group_required
 from django.contrib.auth import get_user_model, login, logout, authenticate 
 from .forms import SignUpForm, ProfileForm, SignForm,SellerVerificationForm,AddressForm,StoreForm
 from django.contrib.auth.decorators import login_required
@@ -21,20 +21,25 @@ def SignView(request):
         return render(request, 'accounts/sign.html', context)
         
     if request.method == 'POST':
-        form = SignForm(request, data=request.POST)
+        form = SignForm(data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Ganti dengan nama URL halaman utama
+                messages.success(request, "You are now logged in.")
+                return redirect('home')  # Replace with the name of your home URL
+            else:
+                messages.error(request, "you not have accounts.")
         else:
-            return render(request, 'accounts/sign.html', {'form': form})
-            
+            messages.error(request, "invalid username or password")
+        
+        return render(request, 'accounts/sign.html', {'form': form})
 
 
-@login_required()
+
+@group_required('buyer')
 def SignOutView(request):
      logout(request)
      return redirect('sign')
@@ -66,7 +71,7 @@ def SignUpView(request):
     
 
 
-@login_required()
+@group_required('buyer')
 def ProfileView(request, username):
     if request.method == 'POST':
         user = request.user
@@ -90,7 +95,7 @@ def ProfileView(request, username):
     return redirect('home')
 
 
-@permission_required('accounts.add_sellerverification', login_url=None, raise_exception=True)
+@group_required('buyer')
 def seller_verification(request):
     if request.method == 'POST':
         form = SellerVerificationForm(request.POST, request.FILES)
@@ -107,7 +112,7 @@ def seller_verification(request):
 
 
 
-@login_required()
+@group_required('buyer')
 def AddressView(request):
     if request.method == 'GET':
         form = AddressForm()
@@ -115,7 +120,6 @@ def AddressView(request):
             'form': form,
         }
         return render (request, 'accounts/useraddress.html',context)
-    
     if request.method == 'POST':
             form = AddressForm(request.POST)
             if form.is_valid():
@@ -127,10 +131,11 @@ def AddressView(request):
                 context = {'form': form}
                 return render(request, 'accounts/useraddress.html', context)
 
-@login_required()
+@group_required('buyer')
 def list_address(request):
     if request.method == 'GET':
         form = UserAddress.objects.filter(UserAddressId = request.user)
+
         context = {
             'form': form,
         }
@@ -154,7 +159,7 @@ def add_store(request):
                 request.user.has_store = True
                 request.user.save()
                 
-                return redirect('home')
+                return redirect('seller_dashboard')
         else:
             form = StoreForm()
 

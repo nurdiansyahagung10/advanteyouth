@@ -2,13 +2,13 @@
 
 
 
-<nav class="navbar navbar-expand-lg mb-2  navbar-dark top-0 z-3 position-sticky  " id="navbar">
+<nav class="navbar border-bottom mb-2 bg-white   navbar-dark top-0 z-3 position-sticky  " id="navbar">
   <div class="container-fluid d-flex flex-wrap">
     <a class="navbar-brand d-none d-sm-block" style="color: #0e0e0e;" href="index.html">
       YOUTH
     </a>
     <form class="form-inline w-25 flex-fill">
-      <input class="form-control mr-sm-2 w-100 input-home rounded-5 border-0 bg-white" style="height: 30px; " type="search" placeholder="Cari"
+      <input class="form-control mr-sm-2 w-100 bg-light input-home rounded-5 border-0 " style="height: 30px; " type="search" placeholder="Cari"
         aria-label="Search">
     </form>
 
@@ -19,7 +19,7 @@
 
       </a>
       <i class='bx bx-envelope p-2'></i>
-      <i class='bx bx-bell p-2'></i>
+              <i class='bx bx-bell p-2'></i>
     </div>
 
     {% if user.is_authenticated %}
@@ -47,7 +47,7 @@
       </a>
     </ul>
     {% else %}
-    <ul class="navbar-nav ps-3 gap- authentication-nav" style=" border-left: 1px solid gray;">
+    <div class="list-unstyled gap-2 ps-3  authentication-nav  d-none d-lg-flex" style=" border-left: 1px solid gray;">
       <li class="nav-item btn-sign">
         <a href="{% url 'sign' %}">
           <button class="py-1 px-3 align-items-center rounded">
@@ -62,7 +62,7 @@
           </button>
         </a>
       </li>
-    </ul>
+    </div>
     {% endif %}
 
 
@@ -105,7 +105,7 @@
           </li>
         </ul>
         {% else %}
-        <ul class="list-unstyled d-flex justify-content-around w-100 gap-3">
+        <ul class="list-unstyled d-flex d-lg-none justify-content-around w-100 gap-3">
           <li class="nav-item btn-sign flex-fill">
             <a href="{% url 'sign' %}">
               <button class="py-1 px-3 w-100 align-items-center rounded">

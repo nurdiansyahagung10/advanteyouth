@@ -107,6 +107,7 @@ class SellerVerification(models.Model):
 
     
 class UserAddress(models.Model):
+    address_id = models.AutoField(primary_key=True)
     UserAddressId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     PhoneNumber = models.IntegerField()
     Province = models.CharField(max_length=100)
@@ -118,21 +119,20 @@ class UserAddress(models.Model):
     address_for = models.CharField(max_length=10, choices=[('kantor', 'Kantor'), ('rumah', 'Rumah')])    
     Main_address = models.BooleanField(default=False)
 
-    def save(self, *args, **kwargs):
     # Jika alamat ini akan menjadi alamat utama, maka set alamat utama lainnya ke False
+    def save(self, *args, **kwargs):
+        # Jika alamat ini akan menjadi alamat utama, maka set alamat utama lainnya ke False
         if self.Main_address:
-            UserAddress.objects.filter(UserAddressId=self.UserAddressId).exclude(id=self.id).update(Main_address=False)
+            UserAddress.objects.filter(UserAddressId=self.UserAddressId).exclude(address_id=self.address_id).update(Main_address=False)
         super(UserAddress, self).save(*args, **kwargs)
-
 
     @property
     def full_name(self):
-        custom_user = self.UserAddressId
-        return f"{custom_user.first_name} {custom_user.last_name}"
+        return self.street
     
 
 @receiver(pre_save, sender=UserAddress)
 def ensure_single_main_address(sender, instance, **kwargs):
     if instance.Main_address:
         # Set semua alamat utama user ini ke False sebelum menyimpan yang baru
-        UserAddress.objects.filter(UserAddressId=instance.UserAddressId).exclude(id=instance.id).update(Main_address=False)
+        UserAddress.objects.filter(UserAddressId=instance.UserAddressId).exclude(address_id=instance.address_id).update(Main_address=False)

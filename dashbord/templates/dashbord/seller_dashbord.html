@@ -1,14 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller Dashboard - Toko Anda</title>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-</head>
-<body>
 
+
+{% endblock newsnippet %}
+
+
+{% block conten %}
+
+{% include 'snippets/nav.html' %}
+
+    {% include 'snippets/navluas.html' %}
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
@@ -72,6 +84,39 @@
         {% endfor %}
     </div>
 </div>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Order #</th>
+        <th scope="col">Total Harga</th>
+        <th scope="col">Status</th>
+        <th scope="col">Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+        <tr>
+          <td>{{ order.id }}</td>
+          <td>{{ order.total_price }}</td>
+          <td>{{ order.status }}</td>
+          <td>
+            {% if not order.approved_by_seller %}
+              <form method="post" action="{% url 'approve_order' order.id %}">
+                {% csrf_token %}
+                <input type="submit" value="Setujui Pesanan" class="btn btn-primary">
+              </form>
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">Tidak ada pesanan untuk penjual ini.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
         </div>
     </div>
@@ -79,3 +124,4 @@
 
 </body>
 </html>
+        {% endblock conten %}

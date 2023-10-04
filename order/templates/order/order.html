@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% include 'accounts/snippets/css.html' %}
+{% include 'accounts/snippets/jstop.html' %}
+
+{% endblock newsnippet %}
+
+
+{% block conten %}
+{% include 'snippets/navluas.html' %}
+
+<div class="container">
+    <h2>Riwayat Pesanan</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Order #</th>
+                    <th scope="col">Total Harga</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in finished_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.total_price }}</td>
+                    <td>{{ order.status }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">Tidak ada pesanan yang telah diselesaikan.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Pesanan yang Belum Diselesaikan</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Order #</th>
+                    <th scope="col">Total Harga</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Aksi</th> <!-- Added a column for action -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in unfinished_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.total_price }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                        {% if order.approved_by_seller == True %}
+                        <a href="{% url 'payment' order_id=order.id %}" class="btn btn-primary">Bayar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Tidak ada pesanan yang belum diselesaikan.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock conten %}

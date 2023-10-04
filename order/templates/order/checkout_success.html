@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% include 'accounts/snippets/css.html' %}
+{% include 'accounts/snippets/jstop.html' %}
+
+{% endblock newsnippet %}
+
+
+{% block conten %}
+{% include 'snippets/navluas.html' %}
+    <h1>Terima kasih!</h1>
+    <p>Pesanan Anda telah berhasil diproses. Berikut adalah detail pesanan Anda:</p>
+
+    <h2>Barang:</h2>
+    {% for item in order.cartitem_set.all %}
+        <p>{{ item.product_id.name_product }}: {{ item.quantity }}</p>
+    {% endfor %}
+
+    <h2>Alamat Pengiriman:</h2>
+    <p>{{ order.shipping.address }}</p>
+
+    <h2>Informasi Pembayaran:</h2>
+    <p>Nama pada Kartu: {{ order.payment.card_name }}</p>
+    <p>Nomor Kartu: {{ order.payment.card_number }}</p>
+</body>
+</html>
+{% endblock conten %}

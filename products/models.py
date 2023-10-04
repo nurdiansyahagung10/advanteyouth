@@ -10,9 +10,29 @@ class product(models.Model):
     CATEGORY_CHOICES = (
         ('', ''),
         ('food', 'Food'),
-        ('fashion', 'Fashion'),
-        ('electronics', 'Electronics'),
-        ('vehicles', 'Vehicles and Accessories'),
+        ('drink', 'Drink'),
+        ('fruit', 'Fruit'),
+        ('ice_cream', 'Ice Cream'),
+        ('raw_food', 'Raw Food'),
+        ('man_clothes', 'Man Clothes'),
+        ('man_accesoris', 'Man Accesoris'),
+        ('woman_clothes', 'Woman Clothes'),
+        ('woman_accesoris', 'Woman Accesoris'),
+        ('hat', 'Hat'),
+        ('shoes', 'Shoes'),
+        ('motorcycle_and_accesoris', 'Motorcycle and Accesoris'),
+        ('car_and_accesoris', 'Car and Accesoris'),
+        ('helmet_and_accesoris', 'Helmet and Accesoris'),
+        ('electronic', 'Electronic'),
+        ('handphone_and_accesoris', 'Handphone and Accesoris'),
+        ('laptop_and_accesoris', 'Laptop and Accesoris'),
+        ('computer_and_accesoris', 'Computer and Accesoris'),
+        ('skincare', 'Skincare'),
+        ('makeup', 'Makeup'),
+        ('basic_needs', 'Basic Needs'),
+        ('voucher_and_phonecredit', 'Voucher and Phonecredit'),
+        ('top_up_games', 'Top Up Games'),
+        ('home_decoration', 'Home Decoration')
     )
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='')
     warna = models.TextField(null=True)

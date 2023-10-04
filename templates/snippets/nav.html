@@ -1,13 +1,13 @@
 {% load static %}
 
 
-<nav class="navbar navbar-expand-lg mb-2 border-bottom navbar-dark top-0 z-3 position-sticky  d-block d-lg-none" id="navbar">
+<nav class="navbar navbar-expand-lg mb-2 bg-white  border-bottom navbar-dark top-0 z-3 position-sticky  d-block d-lg-none w-100" id="navbar">
   <div class="container-fluid d-flex flex-wrap">
     <a class="navbar-brand d-none d-sm-block" style="color: #0e0e0e;" href="index.html">
-      YOUTH
+      Youth
     </a>
     <form class="form-inline w-25 flex-fill">
-      <input class="form-control mr-sm-2 w-100 rounded-5 border-0 bg-white" style="height: 30px;" type="search" placeholder="Cari"
+      <input class="form-control mr-sm-2 w-100 rounded-5  border-1" style="height: 30px;" type="search" placeholder="Cari"
         aria-label="Search">
     </form>
 
@@ -43,7 +43,7 @@
       </a>
     </ul>
     {% else %}
-    <ul class="navbar-nav ps-3 gap- authentication-nav" style=" border-left: 1px solid gray;">
+    <ul class="navbar-nav ps-3 gap-2 authentication-nav" style=" border-left: 1px solid gray;">
       <li class="nav-item btn-sign">
         <a href="{% url 'sign' %}">
           <button class="py-1 px-3 align-items-center rounded">
@@ -101,22 +101,22 @@
           </li>
         </ul>
         {% else %}
-        <ul class="list-unstyled d-flex justify-content-around w-100 gap-3">
-          <li class="nav-item btn-sign flex-fill">
-            <a href="{% url 'sign' %}">
-              <button class="py-1 px-3 w-100 align-items-center rounded">
-                <span>Sign in</span>
-              </button>
-            </a>
-          </li>
-          <li class="nav-item btn-sign flex-fill">
-            <a href="{% url 'signup' %}">
-              <button class="py-1 px-3 w-100 align-items-center rounded">
-                <span>Sign up</span>
-              </button>
-            </a>
-          </li>
-        </ul>
+    <ul class="navbar-nav ps-3 gap-2 authentication-nav" style=" border-left: 1px solid gray;">
+      <li class="nav-item btn-sign">
+        <a href="{% url 'sign' %}">
+          <button class="py-1 px-3 align-items-center rounded">
+            <span>Sign in</span>
+          </button>
+        </a>
+      </li>
+      <li class="nav-item btn-sign">
+        <a href="{% url 'signup' %}">
+          <button class="py-1 px-3 py-1 align-items-center rounded">
+            <span>Sign up</span>
+          </button>
+        </a>
+      </li>
+    </ul>
         {% endif %}
 
           <hr>
@@ -151,19 +151,19 @@
               </button>
               <ul class="menu-dropdown">
                 <li class="nav-item">
-                  <a class="nav-link   " href="/about/">food</a>
+                  <a class="nav-link   " href="{% url 'filtered_products' category='food' %}">food</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link   " href="/about/">drink</a>
+                  <a class="nav-link   " href="{% url 'filtered_products' category='drink' %}">drink</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link   " href="/about/">fruit</a>
+                  <a class="nav-link   " href="{% url 'filtered_products' category='fruit' %}">fruit</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link   " href="/about/">ice cream</a>
+                  <a class="nav-link   " href="{% url 'filtered_products' category='ice cream' %}">ice cream</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link   " href="/about/">raw food</a>
+                  <a class="nav-link   " href="{% url 'filtered_products' category='raw food' %}">raw food</a>
                 </li>
               </ul>
             </div>
@@ -175,22 +175,22 @@
               </button>
               <ul class="menu-dropdown">
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">man clothes</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='man clothes' %}">man clothes</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">man accesoris</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='man accesoris' %}">man accesoris</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">woman clothes</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='woman clothes' %}">woman clothes</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">woman accesoris</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='woman accesoris' %}">woman accesoris</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">hat</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='hat' %}">hat</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">shoes</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='shoes' %}">shoes</a>
                 </li>
               </ul>
             </div>
@@ -202,13 +202,13 @@
               </button>
               <ul class="menu-dropdown">
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">motorcycle and accesoris</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='motorcycle and accesoris' %}">motorcycle and accesoris</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">car and accesoris</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='car and accesoris' %}">car and accesoris</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">helmet and accesoris</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='helmet and accesoris' %}">helmet and accesoris</a>
                 </li>
               </ul>
             </div>
@@ -220,16 +220,16 @@
               </button>
               <ul class="menu-dropdown">
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">electronic</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='electronic' %}">electronic</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">handphone and accesoris</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='handphone and accesoris' %}">handphone and accesoris</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">laptop and accesoris</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='laptop and accesoris' %}">laptop and accesoris</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">computer and accesoris</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='computer and accesoris' %}">computer and accesoris</a>
                 </li>
               </ul>
             </div>
@@ -241,10 +241,10 @@
               </button>
               <ul class="menu-dropdown">
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">skincare</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='skincare' %}">skincare</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">makeup</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='makeup' %}">makeup</a>
                 </li>
           
               </ul>
@@ -257,16 +257,16 @@
               </button>
               <ul class="menu-dropdown">
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">basic needs</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='basic needs' %}">basic needs</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">voucher and phonecredit</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='voucher and phonecredit' %}">voucher and phonecredit</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">top up games</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='top up gamse' %}">top up games</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/about/">home decoration</a>
+                  <a class="nav-link" href="{% url 'filtered_products' category='name decoration' %}">home decoration</a>
                 </li>
               </ul>
             </div>

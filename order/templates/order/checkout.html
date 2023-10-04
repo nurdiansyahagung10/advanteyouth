@@ -1,37 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Checkout</title>
-</head>
-<body>
-    <h1>Checkout</h1>
-    
-    <form method="post">
-        {% csrf_token %}
-        
-        <!-- Shipping Information -->
-        <fieldset>
-            <legend>Shipping Information</legend>
-            {{ shipping_form.as_p }}
-        </fieldset>
-        
-        <!-- Payment Information -->
-        <fieldset>
-            <legend>Payment Information</legend>
-            {{ payment_form.as_p }}
-        </fieldset>
-        
-        <input type="submit" value="Place Order">
-    </form>
-    
-    <!-- Display Cart Summary -->
-    <h2>Cart Summary</h2>
-    <ul>
-        <li>Cart Total: Rp {{ cart.total_price }}</li>
-        <li>Items in Cart: {{ total_quantity }}</li>
-    </ul>
-    
-    <a href="{% url 'cart' %}">Back to Cart</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block tittle %}
+
+{{tittle}}
+
+{%endblock tittle %}
+
+{% block newsnippet %}
+
+{% include 'accounts/snippets/css.html' %}
+{% include 'accounts/snippets/jstop.html' %}
+
+{% endblock newsnippet %}
+
+
+{% block conten %}
+{% include 'snippets/navluas.html' %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Checkout</h1>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div{% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Shipping Information -->
+            <fieldset class="mb-4">
+                <legend>Shipping Information</legend>
+                <div class="form-group">
+                    <select class="form-control" name="address">
+                        {% for address_id, address_text in shipping_form.fields.address.choices %}
+                            <option value="{{ address_id }}" {% if address_id == initial_address %}selected{% endif %}>{{ address_text }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </fieldset>
+
+            <!-- Payment Information -->
+            <fieldset class="mb-4">
+                <legend>Payment Information</legend>
+                <div class="form-group">
+                    <select class="form-control" name="payment_method">
+                        <option value="cod">COD (Cash on Delivery)</option>
+                        <option value="paypal">PayPal</option>
+                        <!-- Add other payment options if needed -->
+                    </select>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+
+        <!-- Display Cart Summary -->
+        <h2 class="mt-5">Cart Summary</h2>
+        <ul>
+            <li>Cart Total: Rp {{ cart.total_price }}</li>
+            <li>Items in Cart: {{ total_quantity }}</li>
+        </ul>
+
+        <a href="{% url 'cart' %}" class="btn btn-secondary mt-3">Back to Cart</a>
+    </div>
+
+{% endblock conten %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block newsnippet %}
+{% include 'accounts/snippets/css.html' %}
+{% include 'accounts/snippets/jstop.html' %}
+{% endblock newsnippet %}
+
+{% block conten %}
+{% include 'snippets/navluas.html' %}
+
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AUkAjZzPzKxQDiUwbEfg1oGVvzTU2DoFjgvmn0VblNjPjKj3ZxM5J0bTW7KSByGHbq2s2aMY99M1N969&currency=IDR"></script>
+
+<div class="container">
+    <h1 class="mt-5">silahkan melakukan pembayaran!</h1>
+    <p>tekan tombol pembayara di bawah ini :</p>
+
+    <div class="d-flex justify-content-center mt-3 w-100">{{ paypal.render }}</div>
+</div>
+{% endblock conten %}

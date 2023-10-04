@@ -13,6 +13,7 @@ class StoreForm(forms.ModelForm):
     class Meta:
         model = Store
         fields = [
+            
             'PhoneNumber',
             'email',
             'store_name',
@@ -81,20 +82,23 @@ class SellerVerificationForm(forms.ModelForm):
         model = SellerVerification
         fields = ['verification_image']
 
-class AddressForm (forms.ModelForm):
+class AddressForm(forms.ModelForm):
     Province = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'provinsi'}))
-    city  = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kota'}))
-    district  = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kecamatan'}))
-    post_code  = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kodePos'}))
-    street  = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'alamat'}))
+    city = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kota'}))
+    district = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kecamatan'}))
+    post_code = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'kodePos'}))
+    street = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','id':'alamat'}))
+    PhoneNumber = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'phoneNumber'}))
     address_for = forms.ChoiceField(
+        required=True,
         choices=[('kantor', 'Kantor'), ('rumah', 'Rumah')],
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'addressFor'})
     )
+    detail = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'detail'}))
+    Main_address = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'mainAddress'}))
+
 
     class Meta:
         model = UserAddress
-        fields = ['PhoneNumber','detail','Province','city','district','post_code','street','address_for','Main_address']
-
-
-
+        fields = ['PhoneNumber', 'detail', 'Province', 'city', 'district', 'post_code', 'street', 'address_for', 'Main_address']
 
